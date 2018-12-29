@@ -61,7 +61,7 @@ class WeiXinQYMessage(Message):
                   (response.code, response.reason))
             return ""
         try:
-            accessToken = json.loads(response.body).get("access_token")
+            accessToken = json.loads(response.body.decode('utf-8')).get("access_token")
             try:
                 yield tornado.gen.Task(self.__redis.setex, redisKeys["WXQY_ACCESS_TOKEN"], 7200, accessToken)
             except:
